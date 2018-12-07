@@ -1,5 +1,6 @@
 package mvvmdemo.latitude.com.textmegic;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawer_layout;
     ImageView closedrawer;
+    Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,21 @@ public class MainActivity extends AppCompatActivity {
                 drawer_layout.closeDrawer(Gravity.START);
             }
         });
-
+        hideFragment();
+        fragment = new TextRepeter();
+        loadFragment(fragment);
     }
+
+    private void hideFragment() {
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().hide(fragment).commitAllowingStateLoss();
+        }
+    }
+
+    private void loadFragment(Fragment fragment) {
+
+        getSupportFragmentManager().beginTransaction().add(R.id.content_frame, fragment).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().show(fragment).commitAllowingStateLoss();
+    }
+
 }
